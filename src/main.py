@@ -41,6 +41,19 @@ def iterative_lev(a:str, b:str, print_matrix:bool = False) -> int:
             print()
         print(f'Distance: {d[a_len][b_len]}')
     return d[a_len][b_len]
+"""
+double similarity_percentage(const string& a, const string& b){
+    if (a.length() == 0 || b.length() == 0) return 0;
+    int lev_dist = iterative_lev(a, b);
+    double max_len = max(a.length(), b.length());
+    return 1 - lev_dist / max_len;
+}
+"""
+
+
+def similarity_percentage(a:str, b:str) -> float:
+    if len(a) == 0 or len(b) == 0: return 0
+    return 1 - iterative_lev(a, b) / max(len(a), len(b))
 
 
 
@@ -48,11 +61,18 @@ def main():
     iterative_lev("1234", "4321", True)
     iterative_lev("a", "1234", True)
     iterative_lev("asd", "asdd", True)
+    iterative_lev("asd", "asd", True)
 
     print(recursive_lev("1234", "4321"))
     print(recursive_lev("a", "1234"))
     print(recursive_lev("asd", "asdd"))
     print(iterative_lev("asd", "asd"))
+
+    print(similarity_percentage("asd", "asd"))
+    print(similarity_percentage("asd", "asdd"))
+    print(similarity_percentage("asd", "asddd"))
+    print(similarity_percentage("asd", "asdddd"))
+
 
 
 
