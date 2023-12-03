@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# Ignore VS Code Files
+.vscode
