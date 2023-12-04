@@ -70,7 +70,7 @@ def word_in_word(word:str, word_in:str) -> bool:
     return word in word_in
 
 
-def check_word_en_dict(word:str):
+def check_word_eng_dict(word:str):
     with open('../local_data/en_dict.csv', 'r') as file:
         for line in file:
             line = line.split(',')
