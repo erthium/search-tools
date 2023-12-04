@@ -51,13 +51,30 @@ double similarity_percentage(const string& a, const string& b){
 """
 
 
+from unicodedata import normalize
+def simplyfy_string(s_input:str) -> str:
+    normalized = normalize('NFKD', s_input)
+    reencoded = normalized.encode('ascii', 'ignore').decode('utf-8')
+    return reencoded.lower()
+
 def similarity_percentage(a:str, b:str) -> float:
     if len(a) == 0 or len(b) == 0: return 0
+    a = simplyfy_string(a)
+    b = simplyfy_string(b)
     return 1 - iterative_lev(a, b) / max(len(a), len(b))
 
 
+def check_word(word:str):
+    with open('../local_data/en_dict.csv', 'r') as file:
+        for line in file:
+            line = line.split(',')
+            similarity = similarity_percentage(word, line[0])
+            if similarity > 0.7:
+                print(f'Word: {line[0]} - Similarity: %{similarity * 100} - Meaning: {line[2]}')
+
 
 def main():
+    """
     iterative_lev("1234", "4321", True)
     iterative_lev("a", "1234", True)
     iterative_lev("asd", "asdd", True)
@@ -72,6 +89,10 @@ def main():
     print(similarity_percentage("asd", "asdd"))
     print(similarity_percentage("asd", "asddd"))
     print(similarity_percentage("asd", "asdddd"))
+    
+    print(simplyfy_string("Staré Město"))
+    """
+    check_word("Shape1")
 
 
 
