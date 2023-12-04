@@ -63,8 +63,14 @@ def similarity_percentage(a:str, b:str) -> float:
     b = simplyfy_string(b)
     return 1 - iterative_lev(a, b) / max(len(a), len(b))
 
+def word_in_word(word:str, word_in:str) -> bool:
+    if len(word) == 0 or len(word_in) == 0: return False
+    word = simplyfy_string(word)
+    word_in = simplyfy_string(word_in)
+    return word in word_in
 
-def check_word(word:str):
+
+def check_word_en_dict(word:str):
     with open('../local_data/en_dict.csv', 'r') as file:
         for line in file:
             line = line.split(',')
@@ -73,8 +79,22 @@ def check_word(word:str):
                 print(f'Word: {line[0]} - Similarity: %{similarity * 100} - Meaning: {line[2]}')
 
 
+def check_word_news(word:str, limit:int = 0.72):
+    with open('security_news.csv', 'r') as file:
+        for line in file:
+            line = line.split(';;')
+            title_pieces = line[0].split()
+            for piece in title_pieces:
+                similarity = similarity_percentage(word, piece)
+                if similarity > limit or word_in_word(word, piece):
+                    print(f'Title: {line[0]}')
+                    print(f'Matched Word: {piece}')
+                    print(f'Similarity: %{(similarity*100):.2f}')
+                    print(f'Link: {line[1]}')
+
 def main():
-    """
+    # General test for functions above
+    """  
     iterative_lev("1234", "4321", True)
     iterative_lev("a", "1234", True)
     iterative_lev("asd", "asdd", True)
@@ -85,6 +105,11 @@ def main():
     print(recursive_lev("asd", "asdd"))
     print(iterative_lev("asd", "asd"))
 
+    # To show the inefficiency of the recursive algorithm
+    # in an imperative language
+    print(recursive_lev("123456789123456789", "912345678912345678"))
+
+    
     print(similarity_percentage("asd", "asd"))
     print(similarity_percentage("asd", "asdd"))
     print(similarity_percentage("asd", "asddd"))
@@ -92,7 +117,8 @@ def main():
     
     print(simplyfy_string("Staré Město"))
     """
-    check_word("Shape1")
+    #check_word_news("Google")
+    #print(simplyfy_string('Ertuğrul Şentürk'))
 
 
 
