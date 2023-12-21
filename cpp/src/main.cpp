@@ -1,8 +1,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
-#include <codecvt>
-#include <locale>
+
 
 using namespace std;
 
@@ -14,6 +13,7 @@ int recursive_lev(const string& a, const string& b){
                     min(recursive_lev(a, b.substr(1)),
                     recursive_lev(a.substr(1), b.substr(1))));
 }
+
 
 int iterative_lev(const string& a, const string& b, bool print_matrix = false){
     int a_len = a.length();
@@ -59,15 +59,12 @@ int iterative_lev(const string& a, const string& b, bool print_matrix = false){
     return d[a_len][b_len];
 }
 
+
 string simplyfy(const string& word){
-    string reencoded;
-    wstring_convert<codecvt_utf8<wchar_t>> converter;
-    wstring normalized = converter.from_bytes(word);
-    for (wchar_t c : normalized){
-        if (c < 128) reencoded += tolower(c);
-    }
-    return reencoded;
+    // TODO: lower the word and transliterate/normalize
+    return word;
 }
+
 
 double similarity_percentage(const string& a, const string& b){
     if (a.length() == 0 || b.length() == 0) return 0;
@@ -76,14 +73,18 @@ double similarity_percentage(const string& a, const string& b){
     return 1 - lev_dist / max_len;
 }
 
+
 bool word_in_word(const string& a, const string& b){
     if (a.length() == 0 || b.length() == 0) return false;
     if (a.length() > b.length()) return false;
-    for (int i = 0; i < b.length() - a.length() + 1; i++){
+    int iter_count = b.length() - a.length() + 1;
+    for (int i = 0; i < iter_count; i++){
         if (b.substr(i, a.length()) == a) return true;
     }
     return false;
 }
+
+
 // format is -> title;;link;;date
 const string news_path = "../../local_data/security_news.csv";
 void check_word_news(const string& word, double limit = 0.72){

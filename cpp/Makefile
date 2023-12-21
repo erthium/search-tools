@@ -1,6 +1,6 @@
 CC := g++
-CFLAGS := -Wall -std=c++11 -Iinclude/SDL2
-LDFLAGS := -lSDL2 -lSDL2_image
+CFLAGS := -Wall -std=c++11 -Iinclude
+LDFLAGS := 
 
 SRC_DIR := src
 OBJ_DIR := build
