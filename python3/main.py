@@ -41,32 +41,26 @@ def iterative_lev(a:str, b:str, print_matrix:bool = False) -> int:
             print()
         print(f'Distance: {d[a_len][b_len]}')
     return d[a_len][b_len]
-"""
-double similarity_percentage(const string& a, const string& b){
-    if (a.length() == 0 || b.length() == 0) return 0;
-    int lev_dist = iterative_lev(a, b);
-    double max_len = max(a.length(), b.length());
-    return 1 - lev_dist / max_len;
-}
-"""
 
 
 from unicodedata import normalize
-def simplyfy_string(s_input:str) -> str:
+def simplyfy(s_input:str) -> str:
     normalized = normalize('NFKD', s_input)
     reencoded = normalized.encode('ascii', 'ignore').decode('utf-8')
     return reencoded.lower()
 
+
 def similarity_percentage(a:str, b:str) -> float:
     if len(a) == 0 or len(b) == 0: return 0
-    a = simplyfy_string(a)
-    b = simplyfy_string(b)
+    a = simplyfy(a)
+    b = simplyfy(b)
     return 1 - iterative_lev(a, b) / max(len(a), len(b))
+
 
 def word_in_word(word:str, word_in:str) -> bool:
     if len(word) == 0 or len(word_in) == 0: return False
-    word = simplyfy_string(word)
-    word_in = simplyfy_string(word_in)
+    word = simplyfy(word)
+    word_in = simplyfy(word_in)
     return word in word_in
 
 
@@ -79,8 +73,8 @@ def check_word_eng_dict(word:str):
                 print(f'Word: {line[0]} - Similarity: %{similarity * 100} - Meaning: {line[2]}')
 
 
-def check_word_news(word:str, limit:int = 0.72):
-    with open('security_news.csv', 'r') as file:
+def check_word_news(word:str, limit:int = 0.72) -> None:
+    with open('../../local_data/security_news.csv', 'r') as file:
         for line in file:
             line = line.split(';;')
             title_pieces = line[0].split()
@@ -91,6 +85,7 @@ def check_word_news(word:str, limit:int = 0.72):
                     print(f'Matched Word: {piece}')
                     print(f'Similarity: %{(similarity*100):.2f}')
                     print(f'Link: {line[1]}')
+
 
 def main():
     # General test for functions above
@@ -115,12 +110,10 @@ def main():
     print(similarity_percentage("asd", "asddd"))
     print(similarity_percentage("asd", "asdddd"))
     
-    print(simplyfy_string("Staré Město"))
+    print(simplyfy("Staré Město"))
     """
-    #check_word_news("Google")
-    #print(simplyfy_string('Ertuğrul Şentürk'))
-
-
+    check_word_news("gpt")
+    #print(simplyfy('Ertuğrul Şentürk'))
 
 
 if __name__ == '__main__':

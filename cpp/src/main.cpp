@@ -1,6 +1,8 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <codecvt>
+#include <locale>
 
 using namespace std;
 
@@ -57,6 +59,16 @@ int iterative_lev(const string& a, const string& b, bool print_matrix = false){
     return d[a_len][b_len];
 }
 
+string simplyfy(const string& word){
+    string reencoded;
+    wstring_convert<codecvt_utf8<wchar_t>> converter;
+    wstring normalized = converter.from_bytes(word);
+    for (wchar_t c : normalized){
+        if (c < 128) reencoded += tolower(c);
+    }
+    return reencoded;
+}
+
 double similarity_percentage(const string& a, const string& b){
     if (a.length() == 0 || b.length() == 0) return 0;
     int lev_dist = iterative_lev(a, b);
@@ -64,9 +76,23 @@ double similarity_percentage(const string& a, const string& b){
     return 1 - lev_dist / max_len;
 }
 
+bool word_in_word(const string& a, const string& b){
+    if (a.length() == 0 || b.length() == 0) return false;
+    if (a.length() > b.length()) return false;
+    for (int i = 0; i < b.length() - a.length() + 1; i++){
+        if (b.substr(i, a.length()) == a) return true;
+    }
+    return false;
+}
+// format is -> title;;link;;date
+const string news_path = "../../local_data/security_news.csv";
+void check_word_news(const string& word, double limit = 0.72){
+
+}
+
 
 int main(){
-    iterative_lev("4321", "1234", true);
-    
+    cout << "Ertuğrul Şentürk" << endl;
+    cout << simplyfy("Ertuğrul Şentürk") << endl;
     return 0;
 }
