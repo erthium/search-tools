@@ -1,6 +1,8 @@
 # Levenshtein Distance
 
-A repertoire for Levenshtein Distance calculation functions to be used in other projects.
+A repertoire for Levenshtein Distance calculation functions to be used in other projects. 
+
+Project is still being worked on.
 
 ## License
 
