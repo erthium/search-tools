@@ -198,3 +198,5 @@ cython_debug/
 ## Other
 # Ignore VS Code Files
 .vscode
+cpp/bin/*
+cpp/build/*

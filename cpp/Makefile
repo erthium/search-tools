@@ -8,7 +8,7 @@ BIN_DIR := bin
 
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))
-EXECUTABLE := $(BIN_DIR)/test
+EXECUTABLE := $(BIN_DIR)/search.smart
 
 .PHONY: all clean run
 
@@ -22,7 +22,7 @@ $(EXECUTABLE): $(OBJ)
 	$(CC) $^ -o $@ $(LDFLAGS)
 
 clean:
-	rm -f $(OBJ_DIR)/*.o $(EXECUTABLE)
+	rm -f $(OBJ_DIR)/*.o $(BIN_DIR)/*
 
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)
