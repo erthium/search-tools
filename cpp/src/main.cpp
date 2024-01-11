@@ -1,9 +1,15 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
-
+#include "utf8proc.h"
 
 using namespace std;
+
+size_t min(size_t a, size_t b){
+    if (a < b) return a;
+    return b;
+}
+
 
 int recursive_lev(const string& a, const string& b){
     if (a.length() == 0) return b.length();
@@ -60,9 +66,16 @@ int iterative_lev(const string& a, const string& b, bool print_matrix = false){
 }
 
 
-string simplyfy(const string& word){
-    // TODO: lower the word and transliterate/normalize
-    return word;
+string simplify(const string& word){
+    utf8proc_uint8_t *normalized = utf8proc_NFKD((utf8proc_uint8_t*)word.c_str());
+    string word_normalized = "";
+    size_t i = 0;
+    while (normalized[i] != 0){
+        // if current char is ASCII, add it to the string
+        if (normalized[i] < 128) word_normalized += (char)normalized[i];
+        i++;
+    }
+    return word_normalized;
 }
 
 
@@ -74,12 +87,12 @@ double similarity_percentage(const string& a, const string& b){
 }
 
 
-bool word_in_word(const string& a, const string& b){
-    if (a.length() == 0 || b.length() == 0) return false;
-    if (a.length() > b.length()) return false;
-    int iter_count = b.length() - a.length() + 1;
+bool word_in_word(const string& word, const string& to_check_in){
+    if (word.length() == 0 || to_check_in.length() == 0) return false;
+    if (word.length() > to_check_in.length()) return false;
+    int iter_count = to_check_in.length() - word.length() + 1;
     for (int i = 0; i < iter_count; i++){
-        if (b.substr(i, a.length()) == a) return true;
+        if (to_check_in.substr(i, word.length()) == word) return true;
     }
     return false;
 }
@@ -93,7 +106,6 @@ void check_word_news(const string& word, double limit = 0.72){
 
 
 int main(){
-    cout << "Ertuğrul Şentürk" << endl;
-    cout << simplyfy("Ertuğrul Şentürk") << endl;
+    cout << simplify("Ertuğrul Şentürk") << endl;
     return 0;
 }

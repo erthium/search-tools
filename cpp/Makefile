@@ -1,6 +1,6 @@
 CC := g++
 CFLAGS := -Wall -std=c++11 -Iinclude
-LDFLAGS := 
+LDFLAGS := -Llib -l:libutf8proc.a
 
 SRC_DIR := src
 OBJ_DIR := build
