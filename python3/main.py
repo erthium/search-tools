@@ -43,8 +43,8 @@ def iterative_lev(a:str, b:str, print_matrix:bool = False) -> int:
     return d[a_len][b_len]
 
 
-from unicodedata import normalize
 def simplyfy(s_input:str) -> str:
+    from unicodedata import normalize
     normalized = normalize('NFKD', s_input)
     reencoded = normalized.encode('ascii', 'ignore').decode('utf-8')
     return reencoded.lower()
