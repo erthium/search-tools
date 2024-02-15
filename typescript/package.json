@@ -6,7 +6,6 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/main.js",
     "test": "jest"
   },
   "devDependencies": {
