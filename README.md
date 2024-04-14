@@ -6,7 +6,7 @@ Project is still being worked on.
 
 ## License
 
-This project is licensed under the [GNU GPL-3.0](https://github.com/ErtyumPX/hashiwokakero/blob/main/LICENSE) license.
+This project is licensed under the [GNU GPL-3.0](https://github.com/ErtyumPX/levenshtein-distance/blob/main/LICENSE) license.
 
 ## Setup
 
